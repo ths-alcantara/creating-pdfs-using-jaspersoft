@@ -1,19 +1,18 @@
 package com.thais.create_document.service;
 
 import com.thais.create_document.dto.DocumentInfoDTO;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -27,31 +26,45 @@ public class ProcessDocuments {
     }
 
     public byte[] createDoc(MultipartFile csvFile) throws JRException {
-        List<DocumentInfoDTO> documentInfos = processCSV.getCsvInfo(csvFile);
 
-        ByteArrayOutputStream zipOutputStream = new ByteArrayOutputStream();
+        List<DocumentInfoDTO> documentInfos =
+                processCSV.getCsvInfo(csvFile);
 
-        InputStream reportStream = getClass()
-                .getResourceAsStream("/templates/documento.jasper");
+        ByteArrayOutputStream zipOutputStream =
+                new ByteArrayOutputStream();
 
-        try (ZipOutputStream zip = new ZipOutputStream(zipOutputStream)) {
+        try (ZipOutputStream zip =
+                     new ZipOutputStream(zipOutputStream)) {
+
+            LocalDateTime certificateDate = LocalDateTime.now();
+
+            JasperReport jasperReport = (JasperReport) JRLoader.loadObject(
+                    getClass().getResourceAsStream(
+                            "/certi_design.jasper")
+            );
 
             for (DocumentInfoDTO document : documentInfos) {
 
                 JRBeanCollectionDataSource dataSource =
-                        new JRBeanCollectionDataSource(List.of(document));
+                        new JRBeanCollectionDataSource(
+                                List.of(document));
 
-                JasperPrint jasperPrint = JasperFillManager.fillReport(
-                        reportStream,
-                        new HashMap<>(),
-                        dataSource
-                );
+                Map<String, Object> params = new HashMap<>();
+                params.put("certificateDate", certificateDate);
+
+                JasperPrint jasperPrint =
+                        JasperFillManager.fillReport(
+                                jasperReport,
+                                params,
+                                dataSource
+                        );
 
                 byte[] pdfBytes =
-                        JasperExportManager.exportReportToPdf(jasperPrint);
-
+                        JasperExportManager.exportReportToPdf(
+                                jasperPrint);
+                System.out.println(document.getName());
                 ZipEntry zipEntry =
-                        new ZipEntry(document.getNome() + ".pdf");
+                        new ZipEntry(document.getName() + ".pdf");
 
                 zip.putNextEntry(zipEntry);
                 zip.write(pdfBytes);
