@@ -28,11 +28,10 @@ https://www.jaspersoft.com/products/jaspersoft-community
 - opencsv
 
 
-
-
-
 ## Screenshots
-Ao rodar essa aplicação você deve ser capaz de gerar pdfs semelhantes ao dessa imagem aqui :
+Ao rodar essa aplicação você deve ser capaz de gerar pdfs com esse design aqui (eu deixei um csv de exemplo salvo no repositorio):
+<img width="1024" height="723" alt="Captura de tela 2026-05-25 203421" src="https://github.com/user-attachments/assets/804c29a1-3349-4635-b9a7-7f086a9cafde" />
+(não, graphic design is not my passion)
 
 
 ## Autores
