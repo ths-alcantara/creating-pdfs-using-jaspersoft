@@ -45,12 +45,13 @@ public class ProcessDocuments {
 
             for (DocumentInfoDTO document : documentInfos) {
 
+                document.setCertificateDate(certificateDate);
+
                 JRBeanCollectionDataSource dataSource =
                         new JRBeanCollectionDataSource(
                                 List.of(document));
 
                 Map<String, Object> params = new HashMap<>();
-                params.put("certificateDate", certificateDate);
 
                 JasperPrint jasperPrint =
                         JasperFillManager.fillReport(

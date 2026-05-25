@@ -1,12 +1,11 @@
 package com.thais.create_document.dto;
 
 import com.opencsv.bean.CsvBindByName;
-import com.opencsv.bean.CsvDate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -17,8 +16,7 @@ public class DocumentInfoDTO {
     private String name;
 
     @CsvBindByName(column = "date")
-    @CsvDate("dd/MM/yyyy")
-    private Date date;
+    private String date;
 
     @CsvBindByName(column = "cpf")
     private String cpf;
@@ -31,4 +29,6 @@ public class DocumentInfoDTO {
 
     @CsvBindByName(column = "school")
     private String school;
+
+    private LocalDateTime certificateDate;
 }
