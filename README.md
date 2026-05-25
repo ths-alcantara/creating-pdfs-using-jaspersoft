@@ -5,7 +5,7 @@ Há um tempo atrás precisei fazer um trabalho parecido com esse e não achava t
 ##  Sobre o projeto 👩🏻‍💻
 Criei, da forma mais enxuta possível (até o momento), uma pequena API que recebe um arquivo CSV e retorna um arquivo .zip contendo PDFs de certificados fictícios.
 
-Cada certificado é gerado com base em uma linha do CSV, ou seja: um arquivo com 100 linhas resulta em 100 PDFs, cada um contendo suas respectivas informações.
+Cada certificado é gerado com base em uma linha do CSV, ou seja: um arquivo com 100 linhas resulta em 100 PDFs, cada um contendo suas respectivas informações, como nome do aluno, cpf, curso, escola, data e nome do professor, todas essas informações são variáveisali mentadas pelo CSV.
 
 Esse projeto pode servir como base para diferentes tipos de geração de documentos, como, notas fiscais, boletins, relatórios,documentos de estoque, certificados e por ai vai.
 
