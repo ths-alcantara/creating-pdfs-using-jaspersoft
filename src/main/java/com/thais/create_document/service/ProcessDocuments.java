@@ -72,9 +72,11 @@ public class ProcessDocuments {
                 zip.closeEntry();
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(
+                    "Erro ao montar os documentos.",
+                    e
+            );
         }
-
         return zipOutputStream.toByteArray();
     }
 }
